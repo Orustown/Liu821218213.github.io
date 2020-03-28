@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://liu821218213.github.io</id>
-    <title>Gridea</title>
-    <updated>2020-03-28T06:57:54.353Z</updated>
+    <title>永不止息</title>
+    <updated>2020-03-28T06:59:19.383Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://liu821218213.github.io"/>
     <link rel="self" href="https://liu821218213.github.io/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
+    <subtitle>混沌猫</subtitle>
     <logo>https://liu821218213.github.io/images/avatar.png</logo>
     <icon>https://liu821218213.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, Gridea</rights>
+    <rights>All rights reserved 2020, 永不止息</rights>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://liu821218213.github.io/post/hello-gridea/</id>
