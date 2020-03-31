@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://liu821218213.github.io</id>
     <title>永不止息</title>
-    <updated>2020-03-31T12:56:55.654Z</updated>
+    <updated>2020-03-31T13:08:08.576Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://liu821218213.github.io"/>
     <link rel="self" href="https://liu821218213.github.io/atom.xml"/>
-    <subtitle>混沌猫</subtitle>
+    <subtitle>混沌猫de个人站点</subtitle>
     <logo>https://liu821218213.github.io/images/avatar.png</logo>
     <icon>https://liu821218213.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 永不止息</rights>
