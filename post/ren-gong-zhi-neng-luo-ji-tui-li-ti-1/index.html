@@ -5,10 +5,11 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="description" content="#1、
-已知:  (1)能阅读者是识字的;  (2)海豚不识字;  (3)有些海豚是聪明的;
-问题：请用 归结原理证明：有些聪明者并不能阅读。
+已知:  (1)能阅读者是识字的 (2)海豚不识字 (3)有些海豚是聪明的
+问题：请用归结原理证明：有些聪明者并不能阅读。
 证:定义如下谓词:
-R（x）表示x能阅读, L(x)表示识字，D（x）表示x是海豚，I（x）表示..." />
+R（x）表示x能阅读, L(x)表示识字，D（x）表示x是海豚，I（x）表示聪明的，
+把..." />
 <link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
 <script async src="https://cdn.ampproject.org/v0.js"></script>
 <title>人工智能-逻辑推理题-1 | 永不止息</title>
@@ -423,7 +424,7 @@ hr{height:.1333vw;margin-top:5.3333vw;margin-bottom:5.3333vw}
 <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>
 <noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 <link rel="canonical" href="https://liu821218213.github.io/post/ren-gong-zhi-neng-luo-ji-tui-li-ti-1/" />
-<link rel="shortcut icon" href="https://liu821218213.github.io/favicon.ico?v=1585715738119">
+<link rel="shortcut icon" href="https://liu821218213.github.io/favicon.ico?v=1585715876869">
 <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
 <script async custom-element="amp-video" src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>
 <script async custom-element="amp-audio" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>
@@ -517,62 +518,56 @@ hr{height:.1333vw;margin-top:5.3333vw;margin-bottom:5.3333vw}
       </div>
       <div class="content">
         <p>#1、<br>
-已知:  (1)能阅读者是识字的;  (2)海豚不识字;  (3)有些海豚是聪明的;<br>
-问题：请用 <strong>归结原理证明</strong>：有些聪明者并不能阅读。</p>
+已知:  (1)能阅读者是识字的 (2)海豚不识字 (3)有些海豚是聪明的<br>
+问题：请用归结原理证明：有些聪明者并不能阅读。</p>
 <p>证:定义如下谓词:</p>
-<pre><code>R（x）表示x能阅读, L(x)表示识字，D（x）表示x是海豚，I（x）表示聪明的，
-
-把已知条件与目标转化为谓词公式为 ：
-F1：∀x(R(x)→L(x))
-F2：∀x(D(x)→¬L(x))
-F3：∃x(D(x)∧I(x))
-G：∃x(I(x)∧¬R(x))
-
-将谓词公式化成子句集 
-①¬R(x)∨L(x)
-②¬D(y)∨¬L(y)
-③D(a)
-④I(a)
-⑤¬I(z)∨R(z)
-⑥¬L(a)——②,③归结｛a/y｝
-⑦¬R(a)——①,⑥归结｛a/x｝ 
-⑧R(a)——④,⑤归结｛a/z｝
-⑨□——⑦,⑧归结
-得证
-</code></pre>
+<p>R（x）表示x能阅读, L(x)表示识字，D（x）表示x是海豚，I（x）表示聪明的，</p>
+<p>把已知条件与目标转化为谓词公式为 ：<br>
+F1：∀x(R(x)→L(x))<br>
+F2：∀x(D(x)→¬L(x))<br>
+F3：∃x(D(x)∧I(x))<br>
+G：∃x(I(x)∧¬R(x))</p>
+<p>将谓词公式化成子句集<br>
+①¬R(x)∨L(x)<br>
+②¬D(y)∨¬L(y)<br>
+③D(a)<br>
+④I(a)<br>
+⑤¬I(z)∨R(z)<br>
+⑥¬L(a)——②,③归结｛a/y｝<br>
+⑦¬R(a)——①,⑥归结｛a/x｝<br>
+⑧R(a)——④,⑤归结｛a/z｝<br>
+⑨□——⑦,⑧归结<br>
+得证</p>
 <p>#2、<br>
 设有如下关系:<br>
 (1)如果x是y的父亲，y又是z的父亲，则x是z的祖父。<br>
 (2)老李是大李的父亲。<br>
 (3)大李是小李的父亲。<br>
 请用归结原理求解：上述人员中谁和谁是祖孙关系？</p>
-<pre><code>解:定义如下谓词
-F(x,y)：x是y的父亲;
-G(x,z)：x是y的祖父;
-把已知条件与目标转化为谓词公式为 ：
-F1：F(x,y)∧F(y,z)→G(x,z)
-F2：F(L,D)
-F3：F(D,X)
-G: ∃u∃vG(u,v)
-其中,L表示老李,D表示大李,X表示小李。
-
-先证存在祖孙关系:
-① ¬F(x,y)∨¬F(y,z)∨G(x,z)    ．．．从F1变换
-② F(L,D)     ．．．从F2变换
-③ F(D,X)    ．．．从F3变换
-④ ¬G(u,v)    ．．．结论的否定
-⑤ ¬F(D,z)∨G(L,z)    ．．．①②归结,置换｛L/x,D/y｝
-⑥ G(L,X)     ．．．③⑤归结,置换｛X/z｝
-⑦ □ ．．．④⑥归结,置换｛L/u,X/v｝
-得证,说明存在祖孙关系。
-
-为了求解用一个重言式④
-④ ¬G(u,v)∨G(u,v)    ．．．用重言式代替结论的否定,重言式恒为真
-⑤ ¬F(D,z)∨G(L,z)    ．．．①②归结,置换｛L/x,D/y｝
-⑥ G(L,X)    ．．．③⑤归结,置换｛X/z｝
-⑦ G(L,X)     ．．．④⑥归结,置换｛L/u,X/v｝
-得结果：L是X的祖父，即老李是小李的祖父。
-</code></pre>
+<p>解:定义如下谓词<br>
+F(x,y)：x是y的父亲;<br>
+G(x,z)：x是y的祖父;<br>
+把已知条件与目标转化为谓词公式为 ：<br>
+F1：F(x,y)∧F(y,z)→G(x,z)<br>
+F2：F(L,D)<br>
+F3：F(D,X)<br>
+G: ∃u∃vG(u,v)<br>
+其中,L表示老李,D表示大李,X表示小李。</p>
+<p>先证存在祖孙关系:<br>
+① ¬F(x,y)∨¬F(y,z)∨G(x,z)    ．．．从F1变换<br>
+② F(L,D)     ．．．从F2变换<br>
+③ F(D,X)    ．．．从F3变换<br>
+④ ¬G(u,v)    ．．．结论的否定<br>
+⑤ ¬F(D,z)∨G(L,z)    ．．．①②归结,置换｛L/x,D/y｝<br>
+⑥ G(L,X)     ．．．③⑤归结,置换｛X/z｝<br>
+⑦ □ ．．．④⑥归结,置换｛L/u,X/v｝<br>
+得证,说明存在祖孙关系。</p>
+<p>为了求解用一个重言式④<br>
+④ ¬G(u,v)∨G(u,v)    ．．．用重言式代替结论的否定,重言式恒为真<br>
+⑤ ¬F(D,z)∨G(L,z)    ．．．①②归结,置换｛L/x,D/y｝<br>
+⑥ G(L,X)    ．．．③⑤归结,置换｛X/z｝<br>
+⑦ G(L,X)     ．．．④⑥归结,置换｛L/u,X/v｝<br>
+得结果：L是X的祖父，即老李是小李的祖父。</p>
 
       </div>
 
@@ -630,7 +625,7 @@ G: ∃u∃vG(u,v)
   <aside id="profile-2" class="widget widget_profile">
     <div class="profile-box">
       <div class="profile-avatar">
-        <amp-img src="https://liu821218213.github.io/images/avatar.png?v=1585715738119" alt="avatar"
+        <amp-img src="https://liu821218213.github.io/images/avatar.png?v=1585715876869" alt="avatar"
           layout="fill"></amp-img>
       </div>
       <div class="profile-content">
