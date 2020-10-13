@@ -9,7 +9,7 @@
 <meta name="description" content="混沌猫猫の个人站点">
 <meta name="theme-color" content="#000">
 <title>Chrome浏览器的正确打开方式 | 永不止息</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1602502685697">
+<link rel="shortcut icon" href="/favicon.ico?v=1602575343202">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -208,7 +208,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">9</span>
+        <span class="site-item-stat-count">10</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -1737,6 +1737,181 @@ PS：如果还是不会，去这个网站看看吧：</p>
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://liu821218213.github.io/post/mo-hu-ju-lei-yu-wrsn/"" data-c="
+          &lt;h1 id=&#34;模糊聚类与wrsn&#34;&gt;模糊聚类与WRSN&lt;/h1&gt;
+&lt;h2 id=&#34;模糊关系&#34;&gt;模糊关系&lt;/h2&gt;
+&lt;p&gt;​	现实世界中,事物之间存在着这样或那样的关系.一些是界限非常明确的关系,如“父子关系”、“大小关系”等等,可以简单地用“是”与“否”或者“1”与“0”来刻画.而更多的则是界限不明显的关系,如“朋友关系”、“相近关系”、“相像关系”等.对于这类关系再用简单的“是”与“否”或者“1”与“0”来刻画显然是不合适的,必须用模糊集理论来进行描述,这就是模糊关系.&lt;br&gt;
+​	模糊关系是模糊集理论重要的内容之一,其应用范围十分广泛,几乎遍及模糊数学的所有应用领域.&lt;br&gt;
+本章主要介绍模糊关系的基本理论及其在聚类分析中的应用,内容主要包括：模糊矩阵,模糊关系,模糊聚类分析.&lt;/p&gt;
+&lt;h2 id=&#34;聚类算法&#34;&gt;聚类算法&lt;/h2&gt;
+&lt;p&gt;聚类算法是我们研究时经常遇到的算法,许多文章用其来对给定的数据集进行聚类,从而得到有利结果,以下是聚类算法的汇总.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1、层次(系统)聚类(Agglomerative Clustering)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#1.1&#34;&gt;1.1 凝聚层次聚类&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#1.2&#34;&gt;1.2 分裂层次聚类&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;2、基于原型的聚类
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#2.1&#34;&gt;2.1 K-均值(K-means)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#2.2&#34;&gt;2.2 二分K-均值(bisecting K-means)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#2.3&#34;&gt;2.3 K-中心(K-mediods)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#2.4&#34;&gt;2.4 模糊C均值聚类(FCM)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;3、基于密度的聚类
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#3.1&#34;&gt;3.1 DBSCAN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#3.2&#34;&gt;3.2 OPTICS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#3.3&#34;&gt;3.3 DENCLUE&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;4、基于网格的聚类
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#4.1&#34;&gt;4.1 STING&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#4.2&#34;&gt;4.2 CLIQUE&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;5、基于图的聚类
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#5.1&#34;&gt;5.1 最小生成树(MST)聚类&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#5.2&#34;&gt;5.2 OPOSSUM&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#5.3&#34;&gt;5.3 Chameleon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;6、基于神经网络
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#6.1&#34;&gt;6.1 SOM&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中我们熟悉的常见聚类算法有：K-means算法、bisecting K-means等.&lt;/p&gt;
+&lt;p&gt;值得注意的是,模糊C均值聚类（FCM）算法的提出,填补了原有K-means算法的的局限性,使得聚类算法应用更加广泛.&lt;/p&gt;
+&lt;p&gt;目前许多WRSN的文章采用的聚类算法都是基于K-means的,而且都是以距离作为原始数据进行聚类,但是这样聚类的结果对于网络来说可能并不是最佳的.&lt;/p&gt;
+&lt;h2 id=&#34;模糊聚类算法&#34;&gt;模糊聚类算法&lt;/h2&gt;
+&lt;p&gt;模糊聚类分析按照聚类过程的不同大致可以分为三大类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;基于模糊关系的分类法：其中包括谱系聚类算法(又称系统聚类法)、基于等价关系的聚类算法、基于相似关系的聚类算法和图论聚类算法等等.它是研究比较早的一种方法,但是由于它不能适用于大数据量的情况,所以在实际中的应用并不广泛.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;基于目标函数的模糊聚类算法：该方法把聚类分析归结成一个带约束的非线性规划问题,通过优化求解获得数据集的最优模糊划分和聚类.该方法设计简单、解决问题的范围广,还可以转化为优化问题而借助经典数学的非线性规划理论求解,并易于计算机实现.因此,随着计算机的应用和发展,基于目标函数的模糊聚类算法成为新的研究热点.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;基于神经网络的模糊聚类算法：它是兴起比较晚的一种算法,主要是采用竞争学习算法来指导网络的聚类过程.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;模糊c均值-fcm&#34;&gt;模糊C均值 (FCM)&lt;/h2&gt;
+&lt;p&gt;上面提到的K-均值聚类,其实它有另一个名字,C-均值聚类(HCM).要讲模糊C-均值,我们先从C-均值,也就是K-均值这个角度谈起.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;HCM&lt;br&gt;
+从上面对K-均值算法的介绍中,我们已经知道了,K-均值的目标函数是:&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?min%20J=%5Csum_%7Bi=1%7D%5E%7Bn%7D%5Csum_%7Bj=1%7D%5E%7Bc%7D%20u_%7Bij%7Dd(x_%7Bi%7D,c_%7Bj%7D)&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;其中,&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;2&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?u_%7Bij%7D=%20%5Cleft%7B%5Cbegin%7Bmatrix%7D%201%20&amp;amp;%20%5Cforall%20k%5Cneq%20j,d(x_%7Bi%7D,c_%7Bj%7D)%5Cleqslant%20d(x_%7Bi%7D,c_%7Bk%7D)%5C%200%20&amp;amp;%20others%20%5Cend%7Bmatrix%7D%5Cright.&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;这也是为什么叫H(Hard)CM.要么隶属该簇,要么不隶属该簇.太硬了.&lt;br&gt;
+引入模糊数学的观点,使得每个给定数据点用值在0,1间的隶度来确定其属于各个组的程度,便得到FCM的核心思想.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;FCM&lt;/p&gt;
+&lt;p&gt;FCM的目标函数是&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;3&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?J=%5Csum_%7Bi=1%7D%5E%7Bn%7D%5Csum_%7Bj=1%7D%5E%7Bc%7D%20u_%7Bij%7D%5E%7Bm%7Dd(x_%7Bi%7D,c_%7Bj%7D)&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;其中&lt;img src=&#34;http://latex.codecogs.com/gif.latex?u_{ij}&#34; alt=&#34;img&#34; style=&#34;zoom:80%;&#34; /&gt;介于0,1之间;也就是说,每个样本对各个簇都有一个隶属度,不再像HCM那样要么属于,要么不属于.更”模糊”&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?m%5Cin%20%5B1,+%5Cinfty&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;)为控制算法模糊程度的参数.&lt;/p&gt;
+&lt;p&gt;而且,对任意样本&lt;img src=&#34;http://latex.codecogs.com/gif.latex?x_%7Bi%7D&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;满足:&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;4&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5Csum_%7Bj=1%7D%5E%7Bc%7D%20u_%7Bij%7D=1&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;借助拉格朗日乘子,我们将限制条件整合到目标函数中得到新的目标函数&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;5&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?J%27=%5Csum_%7Bi=1%7D%5E%7Bn%7D%5Csum_%7Bj=1%7D%5E%7Bc%7D%20(u_%7Bij%7D)%5E%7Bm%7Dd(x_%7Bi%7D,c_%7Bj%7D)+%5Csum_%7Bi=1%7D%5E%7Bn%7D%5Clambda_%7Bi%7D(%5Csum_%7Bj=1%7D%5E%7Bc%7Du_%7Bij%7D-1)&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;即在每一轮迭代中,要寻找&lt;img src=&#34;http://latex.codecogs.com/gif.latex?u_%7Bij%7D&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;使得目标函数最小.&lt;/p&gt;
+&lt;p&gt;下面我们对其进行求解:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;当&lt;img src=&#34;http://latex.codecogs.com/gif.latex?d_%7Bij%7D&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;为欧氏距离,&lt;img src=&#34;http://latex.codecogs.com/gif.latex?J%27&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;对中心&lt;img src=&#34;http://latex.codecogs.com/gif.latex?c_%7Bi%7D&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;求偏导并令其为0,有&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;6&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20J%27%7D%7B%5Cpartial%20c_%7Bj%7D%7D=%5Csum_%7Bi=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7Dx_%7Bi%7D-c_%7Bj%7D%5Csum_%7Bj=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7D=0%20%20%20%20%20%20(1)&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;7&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5CRightarrow%20c_%7Bj%7D=%5Cfrac%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7Dx_%7Bi%7D%7D%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7D%7D%20%20%20%20%20(2)&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?J%27&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;对变量&lt;img src=&#34;http://latex.codecogs.com/gif.latex?u_%7Bij%7D&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;求偏导并令其为0,有:&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;8&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20J%27%7D%7B%5Cpartial%20u_%7Bij%7D%7D=m(u_%7Bij%7D)%5E%7Bm-1%7D%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)+%5Clambda_%7Bj%7D%20=0%20%20%20%20%20%20(3)&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013110537682.png&#34; alt=&#34;image-20201013110537682&#34;  /&gt;
+&lt;p&gt;为了使公式(4)满足条件&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5Csum_%7Bj=1%7D%5E%7Bc%7D%20u_%7Bij%7D=1&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;,我们将公式(4)代入条件,得到:&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;9&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013110650957.png&#34; alt=&#34;image-20201013110650957&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;10&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5CRightarrow%20(-%5Clambda_%7Bj%7D)%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%20%5Csum_%7Bj=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7B1%7D%7B%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)%20%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D=1&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;11&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5CRightarrow%20(-%5Clambda_%7Bj%7D)%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D=%20%5Cbegin%7BBmatrix%7D%20%5Csum_%7Bj=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7B1%7D%7B%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)%20%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%20%5Cend%7BBmatrix%7D%5E%7B-1%7D%20%20%20%20%20(5)&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;看,我们得到了公式(5),即&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5Clambda_%7Bj%7D&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;所需满足的条件.接下来将公式(5)代回到公式(4),我们得到:&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;12&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?u_%7Bij%7D=%20%5Cfrac%7B%5Cbegin%7BBmatrix%7D%20%5Csum_%7Bk=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7B1%7D%7B%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bk%7D)%20%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%20%5Cend%7BBmatrix%7D%5E%7B-1%7D%7D%7B%5Cbegin%7Bbmatrix%7D%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%7D&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;13&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5CRightarrow%20u_%7Bij%7D=%5Cfrac%7B1%7D%7B%5Cbegin%7Bbmatrix%7D%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%20%5Ccdot%20%5Cbegin%7BBmatrix%7D%20%5Csum_%7Bk=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7B1%7D%7B%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bk%7D)%20%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%20%5Cend%7BBmatrix%7D%7D&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;14&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5CRightarrow%20u_%7Bij%7D=%5Cfrac%7B1%7D%7B%5Csum_%7Bk=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7Bm%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)%7D%7Bm%5Ccdot%20d(x_%7Bi%7D,c_%7Bk%7D)%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%7D&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;15&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5CRightarrow%20u_%7Bij%7D=%5Cfrac%7B1%7D%7B%5Csum_%7Bk=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7Bd(x_%7Bi%7D,c_%7Bj%7D)%7D%7Bd(x_%7Bi%7D,c_%7Bk%7D)%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%7D%20%20%20%20%20(6)&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;数学推导到这里就结束了,我们关键再看一下公式(2)与公式(6).这两个公式分别决定了簇中心与隶属矩阵的更新.&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;16&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5CRightarrow%20c_%7Bj%7D=%5Cfrac%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7Dx_%7Bi%7D%7D%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7D%7D%20%20%20%20%20(2)&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;17&#34;&gt;&lt;img src=&#34;http://latex.codecogs.com/gif.latex?%5CRightarrow%20u_%7Bij%7D=%5Cfrac%7B1%7D%7B%5Csum_%7Bk=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7Bd(x_%7Bi%7D,c_%7Bj%7D)%7D%7Bd(x_%7Bi%7D,c_%7Bk%7D)%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%7D%20%20%20%20%20(6)&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;模糊C均值的算法流程如下:&lt;br&gt;
+&lt;img src=&#34;http://img.blog.csdn.net/20170418202647364&#34; alt=&#34;img&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;当算法收敛,就可以得到聚类中心和各个样本对于各簇的隶属度值,从而完成了模糊聚类划分.如果有需要,还可以将模糊聚类结果进行去模糊化.即用一定规则把模糊聚类划分为确定性分类.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;聚类有效性分析&#34;&gt;聚类有效性分析&lt;/h2&gt;
+&lt;p&gt;​	与其它基于目标函数的模糊聚类方法一样，FCM 要求在实施算法之前，必须事先指定分类数目。如果我们指定的聚类数不正确，即使使用很好的聚类算法也不会得到优的聚类结果。&lt;/p&gt;
+&lt;p&gt;​	然而，在实际应用中通常事先并不知道或难以确切知道样本集的聚类数。因此，根据给定样本集中数据的内在结构来自动判断样本集应该具有的聚类数(称之为佳聚类数)，是一个非常有意义的课题。这种自动寻求样本集的佳聚类数问题，我们称之为聚类有效性分析，可以借助有效性函数来实现。聚类的有效性函数，均以聚类算法的相关参数为自变量，目的是评价在选定的参数值下，算法所得的分类结果是&lt;br&gt;
+否或以多大程度有效地反映了数据本身固有的分类结构。经过深入研究，人们基本取得一致的认识：反映聚类有效性的主要特征是类内的紧致性和类间的分离性，因而人们设计的聚类有效性函数，都始于这一基本出发点。&lt;br&gt;
+​	已经提出的聚类有效性函数有许多，并且人们还在逐步改进。比较有代表性的有如下几个。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;划分系数&lt;/p&gt;
+&lt;p&gt;如果将给定样本集分成 c 类，对应的模糊划分矩阵为 U = ( μ ij)c×n，则相应的划分系数为&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;18&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111353413.png&#34; alt=&#34;image-20201013111302946&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;​		Fc的大值对应于佳的聚类数 c*。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;平均模糊熵&lt;/p&gt;
+&lt;p&gt;如果将给定样本集分成 c 类，对应的模糊划分矩阵为 U = ( μ ij)c×n，则相应的平均模糊熵为&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;19&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111618200.png&#34; alt=&#34;image-20201013111353413&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;​		Hc的小值对应于佳的聚类数 c*。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;变差−−分离度&lt;/p&gt;
+&lt;p&gt;如果将给定样本集分成 c 类，对应的模糊划分矩阵为 &lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111302946.png&#34; alt=&#34;image-20201013111618200&#34; loading=&#34;lazy&#34;&gt;聚类中心矩阵为 &lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111645269.png&#34; alt=&#34;image-20201013111633645&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+vi为第 i 类的聚类中心向量，则相应的变差−−分离度为&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;20&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111633645.png&#34; alt=&#34;image-20201013111645269&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;Vw的小值对应于佳的聚类数 c*，其中&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;21&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111831064.png&#34; alt=&#34;image-20201013111725744&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;我们称 Var(U, V) 为变差度，其定义如下：&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;22&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111812707.png&#34; alt=&#34;image-20201013111812707&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;这里，n(i) 是第 i 类的样本数，d(x, y) 是一个度量，定义为：&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;23&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111725744.png&#34; alt=&#34;image-20201013111831064&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;式中&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;24&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111844739.png&#34; alt=&#34;image-20201013111844739&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;变差度所反映的是样本集整体的平均类内分散程度，分类的效果越好，类内的数据越紧密，变差度就越小。&lt;/p&gt;
+&lt;p&gt;称 Sep(c, U) 为分离度，其定义如下：&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;25&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111913045.png&#34; alt=&#34;image-20201013111902031&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;式中&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;26&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111947918.png&#34; alt=&#34;image-20201013111913045&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;分离度通过模糊集之间的不相似性来描述各个类之间的隔离程度，分类效果越好，分离度越大。&lt;br&gt;
+注：佳聚类数 c* 的求取，通常是对 c = 2, 3, …, cmax 逐次实施模糊聚类算法，然后根据相应的模糊划分矩阵 U 和聚类中心矩阵 V 计算有效性函数值，后比较得出佳的聚类数 c*。在实际应用中，需要处 理的数据集其样本数可能非常大，但真实的分类数并不很大。因而通常取 &lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111902031.png&#34; alt=&#34;image-20201013111947918&#34; loading=&#34;lazy&#34;&gt;，或者根据实际情况将cmax 限定的更小，以减少算法运行的费用。&lt;/p&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#1&#34;&gt;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;https://blog.csdn.net/WWWQ2386466490/article/details/80349239&lt;/p&gt;
+&lt;p&gt;https://www.pythonf.cn/read/144212&lt;/p&gt;
+&lt;p&gt;http://grs.dlmu.edu.cn/__local/B/33/BD/9D3B5A6B993880F956A22B52622_B2DB6898_5B08F.pdf&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+">模糊聚类与WRSN</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://liu821218213.github.io/post/er-cha-shu-bian-li-xi-lie-zong-jie/"" data-c="

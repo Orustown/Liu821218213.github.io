@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="混沌猫猫の个人站点">
 <meta name="theme-color" content="#000">
-<title>Leetcode-4. 寻找两个有序数组的中位数 | 永不止息</title>
+<title>模糊聚类与WRSN | 永不止息</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1602575343202">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,8 @@
 
 
 
-  <meta name="description" content="Leetcode-4. 寻找两个有序数组的中位数" />
-  <meta name="keywords" content="Leetcode" />
+  <meta name="description" content="模糊聚类与WRSN" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -190,7 +190,8 @@
       <div class="sidebar-body pisces" id="sidebar_body">
         
           
-            
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -244,6 +245,200 @@
   </div>
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#%E6%A8%A1%E7%B3%8A%E8%81%9A%E7%B1%BB%E4%B8%8Ewrsn">模糊聚类与WRSN</a>
+<ul>
+<li><a href="#%E6%A8%A1%E7%B3%8A%E5%85%B3%E7%B3%BB">模糊关系</a></li>
+<li><a href="#%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95">聚类算法</a></li>
+<li><a href="#%E6%A8%A1%E7%B3%8A%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95">模糊聚类算法</a></li>
+<li><a href="#%E6%A8%A1%E7%B3%8Ac%E5%9D%87%E5%80%BC-fcm">模糊C均值 (FCM)</a></li>
+<li><a href="#%E8%81%9A%E7%B1%BB%E6%9C%89%E6%95%88%E6%80%A7%E5%88%86%E6%9E%90">聚类有效性分析</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5">参考链接</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
+      }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
+    });
+  }
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
           
         
       </div>
@@ -331,8 +526,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://liu821218213.github.io/post/leetcode-4/">
-      Leetcode-4. 寻找两个有序数组的中位数
+    <a class="post-title-link" href="https://liu821218213.github.io/post/mo-hu-ju-lei-yu-wrsn/">
+      模糊聚类与WRSN
     </a>
   </h1>
   <div class="post-meta">
@@ -340,61 +535,193 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2020-04-01 11:03:32">2020-04-01</span>
+      <span class="publish-time" data-t="2020-10-13 11:25:08">2020-10-13</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://liu821218213.github.io/tag/HB_X97gz-/">
-        <span>Leetcode</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1<span class="language" data-lan="minute">分钟</span></span>
+      <span>9<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>136<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>2269<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <p>######## <a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/">4. 寻找两个有序数组的中位数</a></p>
-<pre><code>class Solution(object):
-    def findMedianSortedArrays(self, nums1, nums2):
-        n1 = len(nums1)
-        n2 = len(nums2)
-        if n1 &gt; n2:
-            return self.findMedianSortedArrays(nums2, nums1)
-        k = (n1 + n2 + 1)//2
-        left = 0
-        right = n1
-        while left &lt; right:
-            m1 = left+(right - left)//2
-            m2 = k - m1
-            if nums1[m1] &lt; nums2[m2 - 1]:
-                left = m1 + 1
-            else:
-                right = m1
-        m1 = left
-        m2 = k - m1
-        c1 = max(nums1[m1 - 1] if m1 &gt; 0 else float(&quot;-inf&quot;), nums2[m2 - 1] if m2 &gt; 0 else float(&quot;-inf&quot;))
-        if (n1 + n2) % 2 == 1:
-            return c1
-        c2 = min(nums1[m1] if m1 &lt; n1 else float(&quot;inf&quot;), nums2[m2] if m2 &lt; n2 else float(&quot;inf&quot;))
-        return (c1+c2) / 2
-</code></pre>
+              <h1 id="模糊聚类与wrsn">模糊聚类与WRSN</h1>
+<h2 id="模糊关系">模糊关系</h2>
+<p>​	现实世界中,事物之间存在着这样或那样的关系.一些是界限非常明确的关系,如“父子关系”、“大小关系”等等,可以简单地用“是”与“否”或者“1”与“0”来刻画.而更多的则是界限不明显的关系,如“朋友关系”、“相近关系”、“相像关系”等.对于这类关系再用简单的“是”与“否”或者“1”与“0”来刻画显然是不合适的,必须用模糊集理论来进行描述,这就是模糊关系.<br>
+​	模糊关系是模糊集理论重要的内容之一,其应用范围十分广泛,几乎遍及模糊数学的所有应用领域.<br>
+本章主要介绍模糊关系的基本理论及其在聚类分析中的应用,内容主要包括：模糊矩阵,模糊关系,模糊聚类分析.</p>
+<h2 id="聚类算法">聚类算法</h2>
+<p>聚类算法是我们研究时经常遇到的算法,许多文章用其来对给定的数据集进行聚类,从而得到有利结果,以下是聚类算法的汇总.</p>
+<ul>
+<li>1、层次(系统)聚类(Agglomerative Clustering)
+<ul>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#1.1">1.1 凝聚层次聚类</a></li>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#1.2">1.2 分裂层次聚类</a></li>
+</ul>
+</li>
+<li>2、基于原型的聚类
+<ul>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#2.1">2.1 K-均值(K-means)</a></li>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#2.2">2.2 二分K-均值(bisecting K-means)</a></li>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#2.3">2.3 K-中心(K-mediods)</a></li>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#2.4">2.4 模糊C均值聚类(FCM)</a></li>
+</ul>
+</li>
+<li>3、基于密度的聚类
+<ul>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#3.1">3.1 DBSCAN</a></li>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#3.2">3.2 OPTICS</a></li>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#3.3">3.3 DENCLUE</a></li>
+</ul>
+</li>
+<li>4、基于网格的聚类
+<ul>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#4.1">4.1 STING</a></li>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#4.2">4.2 CLIQUE</a></li>
+</ul>
+</li>
+<li>5、基于图的聚类
+<ul>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#5.1">5.1 最小生成树(MST)聚类</a></li>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#5.2">5.2 OPOSSUM</a></li>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#5.3">5.3 Chameleon</a></li>
+</ul>
+</li>
+<li>6、基于神经网络
+<ul>
+<li><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#6.1">6.1 SOM</a></li>
+</ul>
+</li>
+</ul>
+<p>其中我们熟悉的常见聚类算法有：K-means算法、bisecting K-means等.</p>
+<p>值得注意的是,模糊C均值聚类（FCM）算法的提出,填补了原有K-means算法的的局限性,使得聚类算法应用更加广泛.</p>
+<p>目前许多WRSN的文章采用的聚类算法都是基于K-means的,而且都是以距离作为原始数据进行聚类,但是这样聚类的结果对于网络来说可能并不是最佳的.</p>
+<h2 id="模糊聚类算法">模糊聚类算法</h2>
+<p>模糊聚类分析按照聚类过程的不同大致可以分为三大类：</p>
+<ul>
+<li>
+<p>基于模糊关系的分类法：其中包括谱系聚类算法(又称系统聚类法)、基于等价关系的聚类算法、基于相似关系的聚类算法和图论聚类算法等等.它是研究比较早的一种方法,但是由于它不能适用于大数据量的情况,所以在实际中的应用并不广泛.</p>
+</li>
+<li>
+<p>基于目标函数的模糊聚类算法：该方法把聚类分析归结成一个带约束的非线性规划问题,通过优化求解获得数据集的最优模糊划分和聚类.该方法设计简单、解决问题的范围广,还可以转化为优化问题而借助经典数学的非线性规划理论求解,并易于计算机实现.因此,随着计算机的应用和发展,基于目标函数的模糊聚类算法成为新的研究热点.</p>
+</li>
+<li>
+<p>基于神经网络的模糊聚类算法：它是兴起比较晚的一种算法,主要是采用竞争学习算法来指导网络的聚类过程.</p>
+</li>
+</ul>
+<h2 id="模糊c均值-fcm">模糊C均值 (FCM)</h2>
+<p>上面提到的K-均值聚类,其实它有另一个名字,C-均值聚类(HCM).要讲模糊C-均值,我们先从C-均值,也就是K-均值这个角度谈起.</p>
+<ul>
+<li>
+<p>HCM<br>
+从上面对K-均值算法的介绍中,我们已经知道了,K-均值的目标函数是:</p>
+<figure data-type="image" tabindex="1"><img src="http://latex.codecogs.com/gif.latex?min%20J=%5Csum_%7Bi=1%7D%5E%7Bn%7D%5Csum_%7Bj=1%7D%5E%7Bc%7D%20u_%7Bij%7Dd(x_%7Bi%7D,c_%7Bj%7D)" alt="img" loading="lazy"></figure>
+<p>其中,</p>
+<figure data-type="image" tabindex="2"><img src="http://latex.codecogs.com/gif.latex?u_%7Bij%7D=%20%5Cleft%7B%5Cbegin%7Bmatrix%7D%201%20&amp;%20%5Cforall%20k%5Cneq%20j,d(x_%7Bi%7D,c_%7Bj%7D)%5Cleqslant%20d(x_%7Bi%7D,c_%7Bk%7D)%5C%200%20&amp;%20others%20%5Cend%7Bmatrix%7D%5Cright." alt="img" loading="lazy"></figure>
+<p>这也是为什么叫H(Hard)CM.要么隶属该簇,要么不隶属该簇.太硬了.<br>
+引入模糊数学的观点,使得每个给定数据点用值在0,1间的隶度来确定其属于各个组的程度,便得到FCM的核心思想.</p>
+</li>
+<li>
+<p>FCM</p>
+<p>FCM的目标函数是</p>
+<figure data-type="image" tabindex="3"><img src="http://latex.codecogs.com/gif.latex?J=%5Csum_%7Bi=1%7D%5E%7Bn%7D%5Csum_%7Bj=1%7D%5E%7Bc%7D%20u_%7Bij%7D%5E%7Bm%7Dd(x_%7Bi%7D,c_%7Bj%7D)" alt="img" loading="lazy"></figure>
+<p>其中<img src="http://latex.codecogs.com/gif.latex?u_{ij}" alt="img" style="zoom:80%;" />介于0,1之间;也就是说,每个样本对各个簇都有一个隶属度,不再像HCM那样要么属于,要么不属于.更”模糊”</p>
+<p><img src="http://latex.codecogs.com/gif.latex?m%5Cin%20%5B1,+%5Cinfty" alt="img" loading="lazy">)为控制算法模糊程度的参数.</p>
+<p>而且,对任意样本<img src="http://latex.codecogs.com/gif.latex?x_%7Bi%7D" alt="img" loading="lazy">满足:</p>
+<figure data-type="image" tabindex="4"><img src="http://latex.codecogs.com/gif.latex?%5Csum_%7Bj=1%7D%5E%7Bc%7D%20u_%7Bij%7D=1" alt="img" loading="lazy"></figure>
+<p>借助拉格朗日乘子,我们将限制条件整合到目标函数中得到新的目标函数</p>
+<figure data-type="image" tabindex="5"><img src="http://latex.codecogs.com/gif.latex?J%27=%5Csum_%7Bi=1%7D%5E%7Bn%7D%5Csum_%7Bj=1%7D%5E%7Bc%7D%20(u_%7Bij%7D)%5E%7Bm%7Dd(x_%7Bi%7D,c_%7Bj%7D)+%5Csum_%7Bi=1%7D%5E%7Bn%7D%5Clambda_%7Bi%7D(%5Csum_%7Bj=1%7D%5E%7Bc%7Du_%7Bij%7D-1)" alt="img" loading="lazy"></figure>
+<p>即在每一轮迭代中,要寻找<img src="http://latex.codecogs.com/gif.latex?u_%7Bij%7D" alt="img" loading="lazy">使得目标函数最小.</p>
+<p>下面我们对其进行求解:</p>
+<ol>
+<li>
+<p>当<img src="http://latex.codecogs.com/gif.latex?d_%7Bij%7D" alt="img" loading="lazy">为欧氏距离,<img src="http://latex.codecogs.com/gif.latex?J%27" alt="img" loading="lazy">对中心<img src="http://latex.codecogs.com/gif.latex?c_%7Bi%7D" alt="img" loading="lazy">求偏导并令其为0,有</p>
+<figure data-type="image" tabindex="6"><img src="http://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20J%27%7D%7B%5Cpartial%20c_%7Bj%7D%7D=%5Csum_%7Bi=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7Dx_%7Bi%7D-c_%7Bj%7D%5Csum_%7Bj=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7D=0%20%20%20%20%20%20(1)" alt="img" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="http://latex.codecogs.com/gif.latex?%5CRightarrow%20c_%7Bj%7D=%5Cfrac%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7Dx_%7Bi%7D%7D%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7D%7D%20%20%20%20%20(2)" alt="img" loading="lazy"></figure>
+</li>
+<li>
+<p><img src="http://latex.codecogs.com/gif.latex?J%27" alt="img" loading="lazy">对变量<img src="http://latex.codecogs.com/gif.latex?u_%7Bij%7D" alt="img" loading="lazy">求偏导并令其为0,有:</p>
+<figure data-type="image" tabindex="8"><img src="http://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20J%27%7D%7B%5Cpartial%20u_%7Bij%7D%7D=m(u_%7Bij%7D)%5E%7Bm-1%7D%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)+%5Clambda_%7Bj%7D%20=0%20%20%20%20%20%20(3)" alt="img" loading="lazy"></figure>
+<img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013110537682.png" alt="image-20201013110537682"  />
+<p>为了使公式(4)满足条件<img src="http://latex.codecogs.com/gif.latex?%5Csum_%7Bj=1%7D%5E%7Bc%7D%20u_%7Bij%7D=1" alt="img" loading="lazy">,我们将公式(4)代入条件,得到:</p>
+<figure data-type="image" tabindex="9"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013110650957.png" alt="image-20201013110650957" loading="lazy"></figure>
+<figure data-type="image" tabindex="10"><img src="http://latex.codecogs.com/gif.latex?%5CRightarrow%20(-%5Clambda_%7Bj%7D)%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%20%5Csum_%7Bj=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7B1%7D%7B%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)%20%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D=1" alt="img" loading="lazy"></figure>
+<figure data-type="image" tabindex="11"><img src="http://latex.codecogs.com/gif.latex?%5CRightarrow%20(-%5Clambda_%7Bj%7D)%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D=%20%5Cbegin%7BBmatrix%7D%20%5Csum_%7Bj=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7B1%7D%7B%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)%20%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%20%5Cend%7BBmatrix%7D%5E%7B-1%7D%20%20%20%20%20(5)" alt="img" loading="lazy"></figure>
+<p>看,我们得到了公式(5),即<img src="http://latex.codecogs.com/gif.latex?%5Clambda_%7Bj%7D" alt="img" loading="lazy">所需满足的条件.接下来将公式(5)代回到公式(4),我们得到:</p>
+<figure data-type="image" tabindex="12"><img src="http://latex.codecogs.com/gif.latex?u_%7Bij%7D=%20%5Cfrac%7B%5Cbegin%7BBmatrix%7D%20%5Csum_%7Bk=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7B1%7D%7B%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bk%7D)%20%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%20%5Cend%7BBmatrix%7D%5E%7B-1%7D%7D%7B%5Cbegin%7Bbmatrix%7D%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%7D" alt="img" loading="lazy"></figure>
+<figure data-type="image" tabindex="13"><img src="http://latex.codecogs.com/gif.latex?%5CRightarrow%20u_%7Bij%7D=%5Cfrac%7B1%7D%7B%5Cbegin%7Bbmatrix%7D%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%20%5Ccdot%20%5Cbegin%7BBmatrix%7D%20%5Csum_%7Bk=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7B1%7D%7B%20m%5Ccdot%20d(x_%7Bi%7D,c_%7Bk%7D)%20%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%20%5Cend%7BBmatrix%7D%7D" alt="img" loading="lazy"></figure>
+<figure data-type="image" tabindex="14"><img src="http://latex.codecogs.com/gif.latex?%5CRightarrow%20u_%7Bij%7D=%5Cfrac%7B1%7D%7B%5Csum_%7Bk=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7Bm%5Ccdot%20d(x_%7Bi%7D,c_%7Bj%7D)%7D%7Bm%5Ccdot%20d(x_%7Bi%7D,c_%7Bk%7D)%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%7D" alt="img" loading="lazy"></figure>
+<figure data-type="image" tabindex="15"><img src="http://latex.codecogs.com/gif.latex?%5CRightarrow%20u_%7Bij%7D=%5Cfrac%7B1%7D%7B%5Csum_%7Bk=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7Bd(x_%7Bi%7D,c_%7Bj%7D)%7D%7Bd(x_%7Bi%7D,c_%7Bk%7D)%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%7D%20%20%20%20%20(6)" alt="img" loading="lazy"></figure>
+</li>
+<li>
+<p>数学推导到这里就结束了,我们关键再看一下公式(2)与公式(6).这两个公式分别决定了簇中心与隶属矩阵的更新.</p>
+<figure data-type="image" tabindex="16"><img src="http://latex.codecogs.com/gif.latex?%5CRightarrow%20c_%7Bj%7D=%5Cfrac%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7Dx_%7Bi%7D%7D%7B%5Csum_%7Bi=1%7D%5E%7Bn%7D(u_%7Bij%7D)%5E%7Bm%7D%7D%20%20%20%20%20(2)" alt="img" loading="lazy"></figure>
+<figure data-type="image" tabindex="17"><img src="http://latex.codecogs.com/gif.latex?%5CRightarrow%20u_%7Bij%7D=%5Cfrac%7B1%7D%7B%5Csum_%7Bk=1%7D%5E%7Bc%7D%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7Bd(x_%7Bi%7D,c_%7Bj%7D)%7D%7Bd(x_%7Bi%7D,c_%7Bk%7D)%7D%20%5Cend%7Bbmatrix%7D%5E%7B%5Cfrac%7B1%7D%7Bm-1%7D%7D%7D%20%20%20%20%20(6)" alt="img" loading="lazy"></figure>
+</li>
+</ol>
+</li>
+<li>
+<p>模糊C均值的算法流程如下:<br>
+<img src="http://img.blog.csdn.net/20170418202647364" alt="img" loading="lazy"></p>
+<p>当算法收敛,就可以得到聚类中心和各个样本对于各簇的隶属度值,从而完成了模糊聚类划分.如果有需要,还可以将模糊聚类结果进行去模糊化.即用一定规则把模糊聚类划分为确定性分类.</p>
+</li>
+</ul>
+<h2 id="聚类有效性分析">聚类有效性分析</h2>
+<p>​	与其它基于目标函数的模糊聚类方法一样，FCM 要求在实施算法之前，必须事先指定分类数目。如果我们指定的聚类数不正确，即使使用很好的聚类算法也不会得到优的聚类结果。</p>
+<p>​	然而，在实际应用中通常事先并不知道或难以确切知道样本集的聚类数。因此，根据给定样本集中数据的内在结构来自动判断样本集应该具有的聚类数(称之为佳聚类数)，是一个非常有意义的课题。这种自动寻求样本集的佳聚类数问题，我们称之为聚类有效性分析，可以借助有效性函数来实现。聚类的有效性函数，均以聚类算法的相关参数为自变量，目的是评价在选定的参数值下，算法所得的分类结果是<br>
+否或以多大程度有效地反映了数据本身固有的分类结构。经过深入研究，人们基本取得一致的认识：反映聚类有效性的主要特征是类内的紧致性和类间的分离性，因而人们设计的聚类有效性函数，都始于这一基本出发点。<br>
+​	已经提出的聚类有效性函数有许多，并且人们还在逐步改进。比较有代表性的有如下几个。</p>
+<ul>
+<li>
+<p>划分系数</p>
+<p>如果将给定样本集分成 c 类，对应的模糊划分矩阵为 U = ( μ ij)c×n，则相应的划分系数为</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="18"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111353413.png" alt="image-20201013111302946" loading="lazy"></figure>
+<p>​		Fc的大值对应于佳的聚类数 c*。</p>
+<ul>
+<li>
+<p>平均模糊熵</p>
+<p>如果将给定样本集分成 c 类，对应的模糊划分矩阵为 U = ( μ ij)c×n，则相应的平均模糊熵为</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="19"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111618200.png" alt="image-20201013111353413" loading="lazy"></figure>
+<p>​		Hc的小值对应于佳的聚类数 c*。</p>
+<ul>
+<li>
+<p>变差−−分离度</p>
+<p>如果将给定样本集分成 c 类，对应的模糊划分矩阵为 <img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111302946.png" alt="image-20201013111618200" loading="lazy">聚类中心矩阵为 <img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111645269.png" alt="image-20201013111633645" loading="lazy"><br>
+vi为第 i 类的聚类中心向量，则相应的变差−−分离度为</p>
+<figure data-type="image" tabindex="20"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111633645.png" alt="image-20201013111645269" loading="lazy"></figure>
+<p>Vw的小值对应于佳的聚类数 c*，其中</p>
+<figure data-type="image" tabindex="21"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111831064.png" alt="image-20201013111725744" loading="lazy"></figure>
+<p>我们称 Var(U, V) 为变差度，其定义如下：</p>
+<figure data-type="image" tabindex="22"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111812707.png" alt="image-20201013111812707" loading="lazy"></figure>
+<p>这里，n(i) 是第 i 类的样本数，d(x, y) 是一个度量，定义为：</p>
+<figure data-type="image" tabindex="23"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111725744.png" alt="image-20201013111831064" loading="lazy"></figure>
+<p>式中</p>
+<figure data-type="image" tabindex="24"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111844739.png" alt="image-20201013111844739" loading="lazy"></figure>
+<p>变差度所反映的是样本集整体的平均类内分散程度，分类的效果越好，类内的数据越紧密，变差度就越小。</p>
+<p>称 Sep(c, U) 为分离度，其定义如下：</p>
+<figure data-type="image" tabindex="25"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111913045.png" alt="image-20201013111902031" loading="lazy"></figure>
+<p>式中</p>
+<figure data-type="image" tabindex="26"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111947918.png" alt="image-20201013111913045" loading="lazy"></figure>
+<p>分离度通过模糊集之间的不相似性来描述各个类之间的隔离程度，分类效果越好，分离度越大。<br>
+注：佳聚类数 c* 的求取，通常是对 c = 2, 3, …, cmax 逐次实施模糊聚类算法，然后根据相应的模糊划分矩阵 U 和聚类中心矩阵 V 计算有效性函数值，后比较得出佳的聚类数 c*。在实际应用中，需要处 理的数据集其样本数可能非常大，但真实的分类数并不很大。因而通常取 <img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111902031.png" alt="image-20201013111947918" loading="lazy">，或者根据实际情况将cmax 限定的更小，以减少算法运行的费用。</p>
+<h2 id="参考链接">参考链接</h2>
+<p><a href="https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#1">https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#1</a></p>
+<p>https://blog.csdn.net/WWWQ2386466490/article/details/80349239</p>
+<p>https://www.pythonf.cn/read/144212</p>
+<p>http://grs.dlmu.edu.cn/__local/B/33/BD/9D3B5A6B993880F956A22B52622_B2DB6898_5B08F.pdf</p>
+</li>
+</ul>
 
             </div>
             
@@ -407,7 +734,7 @@
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://liu821218213.github.io/post/leetcode-4/" title="Leetcode-4. 寻找两个有序数组的中位数">https://liu821218213.github.io/post/leetcode-4/</a>
+      <a href="https://liu821218213.github.io/post/mo-hu-ju-lei-yu-wrsn/" title="模糊聚类与WRSN">https://liu821218213.github.io/post/mo-hu-ju-lei-yu-wrsn/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -416,21 +743,15 @@
   </ul>
   <div class="tags">
     
-      <a href="https://liu821218213.github.io/tag/HB_X97gz-/"># Leetcode</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="人工智能-逻辑推理题-1" href="https://liu821218213.github.io/post/ren-gong-zhi-neng-luo-ji-tui-li-ti-1/">人工智能-逻辑推理题-1</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="人工智能-逻辑推理题-1" href="https://liu821218213.github.io/post/ren-gong-zhi-neng-luo-ji-tui-li-ti-1/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="关于OnAndOn😊" href="https://liu821218213.github.io/post/guan-yu-onandon/">关于OnAndOn😊</a>
-        <a class="nav-mobile-next" title="关于OnAndOn😊" href="https://liu821218213.github.io/post/guan-yu-onandon/">下一篇</a>
+        <a class="nav-pc-next" title=" 二叉树遍历系列总结" href="https://liu821218213.github.io/post/er-cha-shu-bian-li-xi-lie-zong-jie/"> 二叉树遍历系列总结</a>
+        <a class="nav-mobile-next" title=" 二叉树遍历系列总结" href="https://liu821218213.github.io/post/er-cha-shu-bian-li-xi-lie-zong-jie/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
