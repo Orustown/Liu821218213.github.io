@@ -9,7 +9,7 @@
 <meta name="description" content="混沌猫猫の个人站点">
 <meta name="theme-color" content="#000">
 <title>关于OnAndOn😊 | 永不止息</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1602575343202">
+<link rel="shortcut icon" href="/favicon.ico?v=1602576340067">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -214,13 +214,13 @@
     </div>
     <div class="sidebar-item-box">
       <a href="">
-        <span class="site-item-stat-count">6</span>
+        <span class="site-item-stat-count">7</span>
         <span class="site-item-stat-name language" data-lan="category">分类</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="/tags/">
-        <span class="site-item-stat-count">6</span>
+        <span class="site-item-stat-count">7</span>
         <span class="site-item-stat-name language" data-lan="tag">标签</span>
       </a>
     </div>
@@ -1777,8 +1777,53 @@ vi为第 i 类的聚类中心向量，则相应的变差−−分离度为&lt;/p
 &lt;figure data-type=&#34;image&#34; tabindex=&#34;26&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111947918.png&#34; alt=&#34;image-20201013111913045&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
 &lt;p&gt;分离度通过模糊集之间的不相似性来描述各个类之间的隔离程度，分类效果越好，分离度越大。&lt;br&gt;
 注：佳聚类数 c* 的求取，通常是对 c = 2, 3, …, cmax 逐次实施模糊聚类算法，然后根据相应的模糊划分矩阵 U 和聚类中心矩阵 V 计算有效性函数值，后比较得出佳的聚类数 c*。在实际应用中，需要处 理的数据集其样本数可能非常大，但真实的分类数并不很大。因而通常取 &lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013111902031.png&#34; alt=&#34;image-20201013111947918&#34; loading=&#34;lazy&#34;&gt;，或者根据实际情况将cmax 限定的更小，以减少算法运行的费用。&lt;/p&gt;
+&lt;h2 id=&#34;fcm代码演示&#34;&gt;FCM代码演示&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-Python3&#34;&gt;import numpy as np
+import matplotlib.pylab as plt
+from sklearn.cluster import KMeans
+from skfuzzy.cluster import cmeans
+
+cp = np.random.uniform(1, 100, (100, 2))
+train = cp[:50]
+test = cp[50:]
+train = train.T
+
+center, u, u0, d, jm, p, fpc = cmeans(train, c=3, m=2, error=0.005, maxiter=1000)
+for i in u:
+    label = np.argmax(u, axis=0)
+
+for i in range(50):
+    if label[i] == 0:
+        plt.scatter(train[0][i], train[1][i], c=&#39;r&#39;)
+    elif label[i] == 1:
+        plt.scatter(train[0][i], train[1][i], c=&#39;g&#39;)
+    elif label[i] == 2:
+        plt.scatter(train[0][i], train[1][i], c=&#39;b&#39;)
+plt.show()
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输出图像：&lt;/p&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;27&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/image-20201013155503232.png&#34; alt=&#34;image-20201013155503232&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;参数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;data：训练数据，这里需要注意data的格式，应为(特征数目，数据个数)，与很多训练数据的shape正好相反。&lt;/li&gt;
+&lt;li&gt;c：需要指定的聚类个数。&lt;/li&gt;
+&lt;li&gt;m：隶属度指数，是一个加权指数，一般为2 。&lt;/li&gt;
+&lt;li&gt;error：当隶属度的变化小于此则提前结束迭代。&lt;/li&gt;
+&lt;li&gt;maxiter：最大迭代次数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;返回值：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;cntr：聚类中心&lt;/li&gt;
+&lt;li&gt;u：最后的隶属度矩阵&lt;/li&gt;
+&lt;li&gt;u0：初始化的隶属度矩阵&lt;/li&gt;
+&lt;li&gt;d：是一个矩阵，记录每一个点到聚类中心的欧式距离&lt;/li&gt;
+&lt;li&gt;jm：是目标函数的优化历史&lt;/li&gt;
+&lt;li&gt;p：p是迭代的次数&lt;/li&gt;
+&lt;li&gt;fpc：全称是fuzzy partition coefficient， 是一个评价分类好坏的指标，它的范围是0到1, 1表示效果最好，后面可以通过它来选择聚类的个数。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#1&#34;&gt;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;https://liangyaorong.github.io/blog/2017/%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%A4%A7%E7%9B%98%E7%82%B9/#1&lt;/p&gt;
 &lt;p&gt;https://blog.csdn.net/WWWQ2386466490/article/details/80349239&lt;/p&gt;
 &lt;p&gt;https://www.pythonf.cn/read/144212&lt;/p&gt;
 &lt;p&gt;http://grs.dlmu.edu.cn/__local/B/33/BD/9D3B5A6B993880F956A22B52622_B2DB6898_5B08F.pdf&lt;/p&gt;
