@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://liu821218213.github.io</id>
     <title>永不止息</title>
-    <updated>2020-10-16T02:44:07.827Z</updated>
+    <updated>2020-11-17T04:15:09.740Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://liu821218213.github.io"/>
     <link rel="self" href="https://liu821218213.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://liu821218213.github.io/images/avatar.png</logo>
     <icon>https://liu821218213.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 永不止息</rights>
+    <entry>
+        <title type="html"><![CDATA[Python3lambda表达式、自定义排序]]></title>
+        <id>https://liu821218213.github.io/post/python3lambda-biao-da-shi-zi-ding-yi-pai-xu/</id>
+        <link href="https://liu821218213.github.io/post/python3lambda-biao-da-shi-zi-ding-yi-pai-xu/">
+        </link>
+        <updated>2020-11-17T04:14:33.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[模糊聚类与WRSN]]></title>
         <id>https://liu821218213.github.io/post/mo-hu-ju-lei-yu-wrsn/</id>
@@ -87,19 +94,6 @@
         <content type="html"><![CDATA[<blockquote>
 <p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
 </blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://liu821218213.github.io/post/hello-gridea/</id>
-        <link href="https://liu821218213.github.io/post/hello-gridea/">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
 ]]></content>
     </entry>
 </feed>

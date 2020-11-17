@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="混沌猫猫の个人站点">
 <meta name="theme-color" content="#000">
-<title>Leetcode-66.加一 | 永不止息</title>
+<title>Python3lambda表达式、自定义排序 | 永不止息</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1605586494128">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,8 @@
 
 
 
-  <meta name="description" content="Leetcode-66.加一" />
-  <meta name="keywords" content="Leetcode" />
+  <meta name="description" content="Python3lambda表达式、自定义排序" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -255,11 +255,8 @@
 <ul>
 <li>
 <ul>
-<li><a href="#%E5%84%BF%E7%AB%A5%E8%8A%82%E5%BF%AB%E4%B9%90">儿童节快乐</a></li>
-<li><a href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF1">解题思路1</a></li>
-<li><a href="#%E4%BB%A3%E7%A0%811">代码1</a></li>
-<li><a href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF2">解题思路2</a></li>
-<li><a href="#%E4%BB%A3%E7%A0%812">代码2</a></li>
+<li><a href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF">解题思路</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
 </ul>
 </li>
 </ul>
@@ -529,8 +526,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://liu821218213.github.io/post/leetcode-66jia-yi/">
-      Leetcode-66.加一
+    <a class="post-title-link" href="https://liu821218213.github.io/post/python3lambda-biao-da-shi-zi-ding-yi-pai-xu/">
+      Python3lambda表达式、自定义排序
     </a>
   </h1>
   <div class="post-meta">
@@ -538,22 +535,9 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2020-06-01 11:39:53">2020-06-01</span>
+      <span class="publish-time" data-t="2020-11-17 12:14:33">2020-11-17</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://liu821218213.github.io/tag/HB_X97gz-/">
-        <span>Leetcode</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
@@ -562,49 +546,57 @@
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>253<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>302<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <h3 id="儿童节快乐"><a href="https://leetcode-cn.com/problems/plus-one/">儿童节快乐</a></h3>
-<hr>
-<h3 id="解题思路1">解题思路1</h3>
-<p><strong>python3<br>
-一次for循环解决问题</strong><br>
-从数组尾部遍历<br>
-如果遇到数字不是9就+1，并返回<br>
-如果是9，则将当前数字置0，并进入下一轮循环</p>
-<p>考虑特殊情况：9999<br>
-此时需要检查最后一次for循环的数字是不是0<br>
-即digits[0]是否为0，如果是0，则遇到了特殊情况<br>
-此时需要在数组最前面加一个数字1，然后返回即可</p>
-<h3 id="代码1">代码1</h3>
+              <p><strong><a href="https://leetcode-cn.com/problems/matrix-cells-in-distance-order/">1030. 距离顺序排列矩阵单元格</a></strong></p>
+<h3 id="解题思路">解题思路</h3>
+<p>sorted的lambda表达式排序</p>
 <pre><code class="language-python3">class Solution:
-    def plusOne(self, digits: List[int]) -&gt; List[int]:
-        for i in range(len(digits)-1, -1, -1):
-            if digits[i] is not 9:
-                digits[i] += 1
-                return digits
-            else:
-                digits[i] = 0
-                if digits[0] is 0:
-                    digits.insert(0, 1)
-                    return digits
+    def allCellsDistOrder(self, R: int, C: int, r0: int, c0: int) -&gt; List[List[int]]:
+        res = [[r, c] for r in range(R) for c in range(C)]
+        return sorted(res, key=lambda x:abs(x[0]-r0)+abs(x[1]-c0))
 </code></pre>
-<h3 id="解题思路2">解题思路2</h3>
-<p><strong>python3<br>
-赖皮解法</strong><br>
-先将数字列表数组转化为数字<br>
-然后+1<br>
-最后将数字转化为数组，并返回</p>
-<h3 id="代码2">代码2</h3>
+<p>python3中sorted函数自定义排序：</p>
+<pre><code># 例1:
+def cmp(a, b):  # 数组升序排序
+    if b &lt; a:
+        return 1
+    if a &lt; b:
+        return -1
+    return 0
+a = [1, 2, 5, 4]
+print(sorted(a, key=functools.cmp_to_key(cmp)))
+
+# 或者:
+def cmp(a, b):  # 数组升序排序
+    return a - b
+a = [1, 2, 5, 4]
+print(sorted(a, key=functools.cmp_to_key(cmp)))
+</code></pre>
+<pre><code># 例2:
+a = [[3,1],[9,7],[6,4],[1,0],[1,3],[3,3]]
+def cmp(x, y):
+    # if x[0] != y[0]:        # 如果第一个元素不同
+    #     return x[0] - y[0]   # 则按照第一个元素升序排序
+    # else:
+    #     return y[1] - x[1]   # 否则按照第二个元素降序排序
+    return x[0] - y[0] if x[0] != y[0] else y[1] - x[1]
+print(sorted(a,key=cmp_to_key(cmp)))
+</code></pre>
+<h3 id="代码">代码</h3>
 <pre><code class="language-python3">class Solution:
-    def plusOne(self, digits: List[int]) -&gt; List[int]:
-        a = [i *10**index for index,i in enumerate(digits[::-1])]
-        num = sum(a) + 1
-        return [int(x) for x in str(num)]
+    def allCellsDistOrder(self, R: int, C: int, r0: int, c0: int) -&gt; List[List[int]]:
+        res = [[r, c] for r in range(R) for c in range(C)]
+        def cmp(x, y):      # 按d1-d2的大小升序
+            d1 = abs(x[0] - r0) + abs(x[1] - c0)
+            d2 = abs(y[0] - r0) + abs(y[1] - c0)
+            return d1 - d2
+        
+        return sorted(res, key=cmp_to_key(cmp))
 </code></pre>
 
             </div>
@@ -618,7 +610,7 @@
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://liu821218213.github.io/post/leetcode-66jia-yi/" title="Leetcode-66.加一">https://liu821218213.github.io/post/leetcode-66jia-yi/</a>
+      <a href="https://liu821218213.github.io/post/python3lambda-biao-da-shi-zi-ding-yi-pai-xu/" title="Python3lambda表达式、自定义排序">https://liu821218213.github.io/post/python3lambda-biao-da-shi-zi-ding-yi-pai-xu/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -627,21 +619,15 @@
   </ul>
   <div class="tags">
     
-      <a href="https://liu821218213.github.io/tag/HB_X97gz-/"># Leetcode</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Leetcode-1431.拥有最多糖果的孩子" href="https://liu821218213.github.io/post/1431-yong-you-zui-duo-tang-guo-de-hai-zi/">Leetcode-1431.拥有最多糖果的孩子</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Leetcode-1431.拥有最多糖果的孩子" href="https://liu821218213.github.io/post/1431-yong-you-zui-duo-tang-guo-de-hai-zi/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="Chrome浏览器的正确打开方式" href="https://liu821218213.github.io/post/chrome-liu-lan-qi-de-zheng-que-da-kai-fang-shi/">Chrome浏览器的正确打开方式</a>
-        <a class="nav-mobile-next" title="Chrome浏览器的正确打开方式" href="https://liu821218213.github.io/post/chrome-liu-lan-qi-de-zheng-que-da-kai-fang-shi/">下一篇</a>
+        <a class="nav-pc-next" title="模糊聚类与WRSN" href="https://liu821218213.github.io/post/mo-hu-ju-lei-yu-wrsn/">模糊聚类与WRSN</a>
+        <a class="nav-mobile-next" title="模糊聚类与WRSN" href="https://liu821218213.github.io/post/mo-hu-ju-lei-yu-wrsn/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
