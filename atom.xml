@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://liu821218213.github.io</id>
     <title>永不止息</title>
-    <updated>2021-03-06T00:44:37.007Z</updated>
+    <updated>2021-05-25T09:23:17.845Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://liu821218213.github.io"/>
     <link rel="self" href="https://liu821218213.github.io/atom.xml"/>
@@ -10,6 +10,695 @@
     <logo>https://liu821218213.github.io/images/avatar.png</logo>
     <icon>https://liu821218213.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 永不止息</rights>
+    <entry>
+        <title type="html"><![CDATA[LRU缓存机制]]></title>
+        <id>https://liu821218213.github.io/post/lru-huan-cun-ji-zhi/</id>
+        <link href="https://liu821218213.github.io/post/lru-huan-cun-ji-zhi/">
+        </link>
+        <updated>2021-05-25T09:19:43.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="lru缓存机制">LRU缓存机制</h2>
+<h3 id="前言">前言</h3>
+<p>LRU（Least Recently Used）即最近最少使用、最近最久未使用，是一种缓存解决方案。</p>
+<p>缓存思想在计算机科学中应用广泛，其核心是以空间换时间，实现方式主要采用特定的数据结构，在计算机存储层次结构中，低一层的存储器都可以看做是高一层的缓存。比如Cache是内存的缓存，内存是硬盘的缓存，硬盘是网络的缓存等等。</p>
+<p>第一次接触到LRU是在操作系统的课程上，在提到OS页面调度算法的时候提到的LRU页面置换算法，页面置换是基于时间和空间局部性原理的基础上，而缓存类似于LRU这样的缓存技术在这样的场景下得到应用。</p>
+<p>LRU在数据库缓存中也有广泛应用，例如Redis缓存淘汰策略。在使用next.js的时候，访问页面时，为了加快访问速度也会用到。</p>
+<p>LRU：如果一个数据最近没有被访问到，那么它将来被访问的几率也很小，也就是说当限定的内存空间已没有其他空间可用时，应该把最久没有访问到的数据去除掉。</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/20210525165748.png" alt="img" loading="lazy"></figure>
+<p>LRU为了实现时间复杂度O(1)，采用HashMap+双向链表的数据结构，实get和put操作，如下图所示。</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/20210525170310.png" alt="LRU数据结构" loading="lazy"></figure>
+<p>Java中可以采用LinkedHashMap源实现LRU，Python中可以调用OrderedDict()实现。</p>
+<h3 id="例题-leetcode146-lru-缓存机制">例题 <a href="https://leetcode-cn.com/problems/lru-cache/">LeetCode146. LRU 缓存机制</a></h3>
+<h3 id="java实现">Java实现</h3>
+<p>下面用是用Java实现的几种方式，分别是</p>
+<h4 id="调用java的linkedhashmap实现lru">调用Java的LinkedHashMap实现LRU</h4>
+<pre><code class="language-java">package LRU;
+
+import java.util.*;
+
+/**
+ * @author Orust
+ * @create 2021/5/24 16:07
+ */
+
+// 146. LRU 缓存机制: https://leetcode-cn.com/problems/lru-cache/
+// LinkedHashMap源码中写道: This kind of map is well-suited to building LRU caches.
+// put和get的时间复杂度均为O(1)
+// 空间复杂度为O(capacity) capacity为LRU缓存大小
+// 广泛应用与OS内存页面调度，Redis缓存淘汰策略
+
+// 样例输入
+// [&quot;LRUCache_4&quot;,&quot;put&quot;,&quot;put&quot;,&quot;put&quot;,&quot;get&quot;,&quot;put&quot;,&quot;put&quot;,&quot;get&quot;,&quot;put&quot;,&quot;put&quot;,&quot;get&quot;,&quot;put&quot;,&quot;get&quot;,&quot;get&quot;,&quot;get&quot;,&quot;put&quot;,&quot;put&quot;,&quot;get&quot;,&quot;put&quot;,&quot;get&quot;]
+// [[10],[7,28],[7,1],[8,15],[6],[10,27],[8,10],[8],[6,29],[1,9],[6],[10,7],[1],[2],[13],[8,30],[1,5],[1],[13,2],[12]]
+// 预期结果
+// [null,null,null,null,-1,null,null,10,null,null,29,null,9,-1,-1,null,null,5,null,-1]
+
+
+// 调用Java的LinkedHashMap实现LRU
+
+public class LRUCache {
+    int capacity;
+    LinkedHashMap&lt;Integer, Integer&gt; cache;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        cache = new LinkedHashMap&lt;&gt;();
+    }
+
+    public int get(int key) {
+        if (cache.containsKey(key)) {
+            int num = cache.remove(key);
+            cache.put(key, num);
+            return num;
+        } else return -1;  // 未找到当前元素
+    }
+
+    public void put(int key, int value) {
+        if (cache.containsKey(key)) {
+            cache.remove(key);
+        } else if (cache.size() == capacity) {
+            // cache.remove(cache.entrySet().iterator().next().getKey());
+            cache.remove(cache.keySet().iterator().next());
+        }
+        cache.put(key, value);
+    }
+
+    public static void main(String[] args) {
+        LRUCache obj = new LRUCache(10);
+        obj.put(7, 28);
+        obj.put(7, 1);
+        obj.put(8, 15);
+        System.out.println(obj.get(6));
+        obj.put(10, 27);
+        obj.put(8, 10);
+        System.out.println(obj.get(8));
+        obj.put(6, 29);
+        obj.put(1, 9);
+        System.out.println(obj.get(6));
+        obj.put(10, 7);
+        System.out.println(obj.get(1));
+        System.out.println(obj.get(2));
+        System.out.println(obj.get(13));
+        obj.put(8, 30);
+        obj.put(1, 5);
+        System.out.println(obj.get(1));
+        obj.put(13, 2);
+        System.out.println(obj.get(12));
+    }
+}
+</code></pre>
+<h4 id="hashmap-定义双向链表-实现lru">HashMap + 定义双向链表 实现LRU</h4>
+<pre><code class="language-java">package LRU;
+
+import java.util.*;
+
+/**
+ * @author Orust
+ * @create 2021/5/24 16:18
+ */
+
+// HashMap + 定义双向链表 实现LRU
+
+public class LRUCache_2 {
+    int capacity;
+    HashMap&lt;Integer, Node&gt; map;
+    Node head;
+    Node tail;
+
+    private static class Node {
+        int key;
+        int value;
+        Node prev;
+        Node next;
+
+        public Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    public LRUCache_2(int capacity) {
+        this.capacity = capacity;
+        map = new HashMap&lt;&gt;();
+    }
+
+    public int get(int key) {
+        if (map.containsKey(key)) {
+            Node node = map.get(key);
+            moveToHead(node);
+            return node.value;
+        } else return -1;
+    }
+
+    public void put(int key, int value) {
+        if (map.containsKey(key)) {
+            Node node = map.get(key);
+            node.value = value;
+            map.put(key, node);
+            moveToHead(node);
+        } else {
+            if (map.size() == capacity)
+                map.remove(popTail());
+            Node node = new Node(key, value);
+            map.put(key, node);
+            addToHead(node);
+        }
+    }
+
+    private void addToHead(Node node) {
+        if (tail == null) {  // 当前链表为空
+            head = node;
+            tail = node;
+        } else {
+            head.prev = node;
+            node.next = head;
+            node.prev = null;
+            head = node;
+        }
+    }
+
+    private void moveToHead(Node node) {
+        if (node == head) return;  // 判断是否是头尾节点并删除节点
+        node.prev.next = node.next;
+        if (node == tail) tail = tail.prev;
+        else node.next.prev = node.prev;
+        addToHead(node);
+    }
+
+    private int popTail() {
+        if (tail == null) throw new NullPointerException(&quot;NullPointerException!&quot;);
+        int key = tail.key;
+        if (tail == head) {
+            head = null;
+            tail = null;
+        } else {
+            tail = tail.prev;
+            tail.next = null;
+        }
+        return key;
+    }
+
+    public static void main(String[] args) {
+        LRUCache_2 obj = new LRUCache_2(10);
+        obj.put(7, 28);
+        obj.put(7, 1);
+        obj.put(8, 15);
+        System.out.println(obj.get(6));
+        obj.put(10, 27);
+        obj.put(8, 10);
+        System.out.println(obj.get(8));
+        obj.put(6, 29);
+        obj.put(1, 9);
+        System.out.println(obj.get(6));
+        obj.put(10, 7);
+        System.out.println(obj.get(1));
+        System.out.println(obj.get(2));
+        System.out.println(obj.get(13));
+        obj.put(8, 30);
+        obj.put(1, 5);
+        System.out.println(obj.get(1));
+        obj.put(13, 2);
+        System.out.println(obj.get(12));
+    }
+}
+
+</code></pre>
+<h4 id="hashmap-定义静态内部类-mylinkedlist-泛型-实现lru">HashMap + 定义静态内部类 MyLinkedList　+　泛型 实现LRU</h4>
+<pre><code class="language-java">package LRU;
+
+import java.util.*;
+
+/**
+ * @author Orust
+ * @create 2021/5/24 17:03
+ */
+
+// HashMap + 定义静态内部类MyLinkedList　+　泛型 实现LRU
+
+public class LRUCache_3&lt;K, V&gt; {
+    int capacity;
+    Map&lt;K, Node&lt;K, V&gt;&gt; map = new HashMap&lt;&gt;();
+    MyLinkedList&lt;K, V&gt; cache = new MyLinkedList&lt;&gt;();
+
+    public LRUCache_3(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public V get(K key) {
+        if (map.containsKey(key)) {
+            Node&lt;K, V&gt; node = map.get(key);
+            cache.moveToHead(node);
+            return node.value;
+        } else return null;
+    }
+
+    public void put(K key, V value) {
+        if (map.containsKey(key)) {
+            Node&lt;K, V&gt; node = map.get(key);
+            node.value = value;
+            map.put(key, node);
+            cache.moveToHead(node);
+        } else {
+            if (map.size() == capacity)
+                map.remove(cache.popTail());
+            Node&lt;K, V&gt; node = new Node&lt;&gt;(key, value);
+            map.put(key, node);
+            cache.addToHead(node);
+        }
+    }
+
+    private static class Node&lt;K, V&gt; {
+        K key;
+        V value;
+        Node&lt;K, V&gt; prev;
+        Node&lt;K, V&gt; next;
+
+        Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    private static class MyLinkedList&lt;K, V&gt; {
+        Node&lt;K, V&gt; head;  // head是最近使用的数据
+        Node&lt;K, V&gt; tail;
+
+        private void addToHead(Node&lt;K, V&gt; node) {
+            if (tail == null) {  // 当前链表为空
+                head = node;
+                tail = node;
+            } else {
+                head.prev = node;
+                node.next = head;
+                node.prev = null;
+                head = node;
+            }
+        }
+
+        private void moveToHead(Node&lt;K, V&gt; node) {
+            if (node == head) return;  // 判断是否是头尾节点并删除节点
+            node.prev.next = node.next;
+            if (node == tail) tail = tail.prev;
+            else node.next.prev = node.prev;
+            addToHead(node);
+        }
+
+        private K popTail() {
+            if (tail == null) throw new NullPointerException(&quot;NullPointerException!&quot;);
+            K key = tail.key;
+            if (tail == head) {
+                head = null;
+                tail = null;
+            } else {
+                tail = tail.prev;
+                tail.next = null;
+            }
+            return key;
+        }
+    }
+
+
+    public static void main(String[] args) {
+        LRUCache_3&lt;String, Integer&gt; obj = new LRUCache_3&lt;&gt;(10);
+        obj.put(&quot;7&quot;, 28);
+        obj.put(&quot;7&quot;, 1);
+        obj.put(&quot;8&quot;, 15);
+        System.out.println(obj.get(&quot;6&quot;));
+        obj.put(&quot;10&quot;, 27);
+        obj.put(&quot;8&quot;, 10);
+        System.out.println(obj.get(&quot;8&quot;));
+        obj.put(&quot;6&quot;, 29);
+        obj.put(&quot;1&quot;, 9);
+        System.out.println(obj.get(&quot;6&quot;));
+        obj.put(&quot;10&quot;, 7);
+        System.out.println(obj.get(&quot;1&quot;));
+        System.out.println(obj.get(&quot;2&quot;));
+        System.out.println(obj.get(&quot;13&quot;));
+        obj.put(&quot;8&quot;, 30);
+        obj.put(&quot;1&quot;, 5);
+        System.out.println(obj.get(&quot;1&quot;));
+        obj.put(&quot;13&quot;, 2);
+        System.out.println(obj.get(&quot;12&quot;));
+    }
+}
+</code></pre>
+<h4 id="在tomcat6x版本中被使用的lru实现方式">在tomcat6.x版本中被使用的LRU实现方式</h4>
+<pre><code class="language-java">package LRU;
+
+import java.util.*;
+
+/**
+ * @author Orust
+ * @create 2021/5/25 10:53
+ */
+
+// 文章链接 https://www.iteye.com/blog/flychao88-1977653
+// 在tomcat6.x版本中被使用的LRU实现方式
+
+public class LRUCache_4 {
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="lru缓存机制">LRU缓存机制</h2>
+<h3 id="前言">前言</h3>
+<p>LRU（Least Recently Used）即最近最少使用、最近最久未使用，是一种缓存解决方案。</p>
+<p>缓存思想在计算机科学中应用广泛，其核心是以空间换时间，实现方式主要采用特定的数据结构，在计算机存储层次结构中，低一层的存储器都可以看做是高一层的缓存。比如Cache是内存的缓存，内存是硬盘的缓存，硬盘是网络的缓存等等。</p>
+<p>第一次接触到LRU是在操作系统的课程上，在提到OS页面调度算法的时候提到的LRU页面置换算法，页面置换是基于时间和空间局部性原理的基础上，而缓存类似于LRU这样的缓存技术在这样的场景下得到应用。</p>
+<p>LRU在数据库缓存中也有广泛应用，例如Redis缓存淘汰策略。在使用next.js的时候，访问页面时，为了加快访问速度也会用到。</p>
+<p>LRU：如果一个数据最近没有被访问到，那么它将来被访问的几率也很小，也就是说当限定的内存空间已没有其他空间可用时，应该把最久没有访问到的数据去除掉。</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/20210525165748.png" alt="img" loading="lazy"></figure>
+<p>LRU为了实现时间复杂度O(1)，采用HashMap+双向链表的数据结构，实get和put操作，如下图所示。</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/Liu821218213/Typora-PicGo/master/img/20210525170310.png" alt="LRU数据结构" loading="lazy"></figure>
+<p>Java中可以采用LinkedHashMap源实现LRU，Python中可以调用OrderedDict()实现。</p>
+<h3 id="例题-leetcode146-lru-缓存机制">例题 <a href="https://leetcode-cn.com/problems/lru-cache/">LeetCode146. LRU 缓存机制</a></h3>
+<h3 id="java实现">Java实现</h3>
+<p>下面用是用Java实现的几种方式，分别是</p>
+<h4 id="调用java的linkedhashmap实现lru">调用Java的LinkedHashMap实现LRU</h4>
+<pre><code class="language-java">package LRU;
+
+import java.util.*;
+
+/**
+ * @author Orust
+ * @create 2021/5/24 16:07
+ */
+
+// 146. LRU 缓存机制: https://leetcode-cn.com/problems/lru-cache/
+// LinkedHashMap源码中写道: This kind of map is well-suited to building LRU caches.
+// put和get的时间复杂度均为O(1)
+// 空间复杂度为O(capacity) capacity为LRU缓存大小
+// 广泛应用与OS内存页面调度，Redis缓存淘汰策略
+
+// 样例输入
+// [&quot;LRUCache_4&quot;,&quot;put&quot;,&quot;put&quot;,&quot;put&quot;,&quot;get&quot;,&quot;put&quot;,&quot;put&quot;,&quot;get&quot;,&quot;put&quot;,&quot;put&quot;,&quot;get&quot;,&quot;put&quot;,&quot;get&quot;,&quot;get&quot;,&quot;get&quot;,&quot;put&quot;,&quot;put&quot;,&quot;get&quot;,&quot;put&quot;,&quot;get&quot;]
+// [[10],[7,28],[7,1],[8,15],[6],[10,27],[8,10],[8],[6,29],[1,9],[6],[10,7],[1],[2],[13],[8,30],[1,5],[1],[13,2],[12]]
+// 预期结果
+// [null,null,null,null,-1,null,null,10,null,null,29,null,9,-1,-1,null,null,5,null,-1]
+
+
+// 调用Java的LinkedHashMap实现LRU
+
+public class LRUCache {
+    int capacity;
+    LinkedHashMap&lt;Integer, Integer&gt; cache;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        cache = new LinkedHashMap&lt;&gt;();
+    }
+
+    public int get(int key) {
+        if (cache.containsKey(key)) {
+            int num = cache.remove(key);
+            cache.put(key, num);
+            return num;
+        } else return -1;  // 未找到当前元素
+    }
+
+    public void put(int key, int value) {
+        if (cache.containsKey(key)) {
+            cache.remove(key);
+        } else if (cache.size() == capacity) {
+            // cache.remove(cache.entrySet().iterator().next().getKey());
+            cache.remove(cache.keySet().iterator().next());
+        }
+        cache.put(key, value);
+    }
+
+    public static void main(String[] args) {
+        LRUCache obj = new LRUCache(10);
+        obj.put(7, 28);
+        obj.put(7, 1);
+        obj.put(8, 15);
+        System.out.println(obj.get(6));
+        obj.put(10, 27);
+        obj.put(8, 10);
+        System.out.println(obj.get(8));
+        obj.put(6, 29);
+        obj.put(1, 9);
+        System.out.println(obj.get(6));
+        obj.put(10, 7);
+        System.out.println(obj.get(1));
+        System.out.println(obj.get(2));
+        System.out.println(obj.get(13));
+        obj.put(8, 30);
+        obj.put(1, 5);
+        System.out.println(obj.get(1));
+        obj.put(13, 2);
+        System.out.println(obj.get(12));
+    }
+}
+</code></pre>
+<h4 id="hashmap-定义双向链表-实现lru">HashMap + 定义双向链表 实现LRU</h4>
+<pre><code class="language-java">package LRU;
+
+import java.util.*;
+
+/**
+ * @author Orust
+ * @create 2021/5/24 16:18
+ */
+
+// HashMap + 定义双向链表 实现LRU
+
+public class LRUCache_2 {
+    int capacity;
+    HashMap&lt;Integer, Node&gt; map;
+    Node head;
+    Node tail;
+
+    private static class Node {
+        int key;
+        int value;
+        Node prev;
+        Node next;
+
+        public Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    public LRUCache_2(int capacity) {
+        this.capacity = capacity;
+        map = new HashMap&lt;&gt;();
+    }
+
+    public int get(int key) {
+        if (map.containsKey(key)) {
+            Node node = map.get(key);
+            moveToHead(node);
+            return node.value;
+        } else return -1;
+    }
+
+    public void put(int key, int value) {
+        if (map.containsKey(key)) {
+            Node node = map.get(key);
+            node.value = value;
+            map.put(key, node);
+            moveToHead(node);
+        } else {
+            if (map.size() == capacity)
+                map.remove(popTail());
+            Node node = new Node(key, value);
+            map.put(key, node);
+            addToHead(node);
+        }
+    }
+
+    private void addToHead(Node node) {
+        if (tail == null) {  // 当前链表为空
+            head = node;
+            tail = node;
+        } else {
+            head.prev = node;
+            node.next = head;
+            node.prev = null;
+            head = node;
+        }
+    }
+
+    private void moveToHead(Node node) {
+        if (node == head) return;  // 判断是否是头尾节点并删除节点
+        node.prev.next = node.next;
+        if (node == tail) tail = tail.prev;
+        else node.next.prev = node.prev;
+        addToHead(node);
+    }
+
+    private int popTail() {
+        if (tail == null) throw new NullPointerException(&quot;NullPointerException!&quot;);
+        int key = tail.key;
+        if (tail == head) {
+            head = null;
+            tail = null;
+        } else {
+            tail = tail.prev;
+            tail.next = null;
+        }
+        return key;
+    }
+
+    public static void main(String[] args) {
+        LRUCache_2 obj = new LRUCache_2(10);
+        obj.put(7, 28);
+        obj.put(7, 1);
+        obj.put(8, 15);
+        System.out.println(obj.get(6));
+        obj.put(10, 27);
+        obj.put(8, 10);
+        System.out.println(obj.get(8));
+        obj.put(6, 29);
+        obj.put(1, 9);
+        System.out.println(obj.get(6));
+        obj.put(10, 7);
+        System.out.println(obj.get(1));
+        System.out.println(obj.get(2));
+        System.out.println(obj.get(13));
+        obj.put(8, 30);
+        obj.put(1, 5);
+        System.out.println(obj.get(1));
+        obj.put(13, 2);
+        System.out.println(obj.get(12));
+    }
+}
+
+</code></pre>
+<h4 id="hashmap-定义静态内部类-mylinkedlist-泛型-实现lru">HashMap + 定义静态内部类 MyLinkedList　+　泛型 实现LRU</h4>
+<pre><code class="language-java">package LRU;
+
+import java.util.*;
+
+/**
+ * @author Orust
+ * @create 2021/5/24 17:03
+ */
+
+// HashMap + 定义静态内部类MyLinkedList　+　泛型 实现LRU
+
+public class LRUCache_3&lt;K, V&gt; {
+    int capacity;
+    Map&lt;K, Node&lt;K, V&gt;&gt; map = new HashMap&lt;&gt;();
+    MyLinkedList&lt;K, V&gt; cache = new MyLinkedList&lt;&gt;();
+
+    public LRUCache_3(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public V get(K key) {
+        if (map.containsKey(key)) {
+            Node&lt;K, V&gt; node = map.get(key);
+            cache.moveToHead(node);
+            return node.value;
+        } else return null;
+    }
+
+    public void put(K key, V value) {
+        if (map.containsKey(key)) {
+            Node&lt;K, V&gt; node = map.get(key);
+            node.value = value;
+            map.put(key, node);
+            cache.moveToHead(node);
+        } else {
+            if (map.size() == capacity)
+                map.remove(cache.popTail());
+            Node&lt;K, V&gt; node = new Node&lt;&gt;(key, value);
+            map.put(key, node);
+            cache.addToHead(node);
+        }
+    }
+
+    private static class Node&lt;K, V&gt; {
+        K key;
+        V value;
+        Node&lt;K, V&gt; prev;
+        Node&lt;K, V&gt; next;
+
+        Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    private static class MyLinkedList&lt;K, V&gt; {
+        Node&lt;K, V&gt; head;  // head是最近使用的数据
+        Node&lt;K, V&gt; tail;
+
+        private void addToHead(Node&lt;K, V&gt; node) {
+            if (tail == null) {  // 当前链表为空
+                head = node;
+                tail = node;
+            } else {
+                head.prev = node;
+                node.next = head;
+                node.prev = null;
+                head = node;
+            }
+        }
+
+        private void moveToHead(Node&lt;K, V&gt; node) {
+            if (node == head) return;  // 判断是否是头尾节点并删除节点
+            node.prev.next = node.next;
+            if (node == tail) tail = tail.prev;
+            else node.next.prev = node.prev;
+            addToHead(node);
+        }
+
+        private K popTail() {
+            if (tail == null) throw new NullPointerException(&quot;NullPointerException!&quot;);
+            K key = tail.key;
+            if (tail == head) {
+                head = null;
+                tail = null;
+            } else {
+                tail = tail.prev;
+                tail.next = null;
+            }
+            return key;
+        }
+    }
+
+
+    public static void main(String[] args) {
+        LRUCache_3&lt;String, Integer&gt; obj = new LRUCache_3&lt;&gt;(10);
+        obj.put(&quot;7&quot;, 28);
+        obj.put(&quot;7&quot;, 1);
+        obj.put(&quot;8&quot;, 15);
+        System.out.println(obj.get(&quot;6&quot;));
+        obj.put(&quot;10&quot;, 27);
+        obj.put(&quot;8&quot;, 10);
+        System.out.println(obj.get(&quot;8&quot;));
+        obj.put(&quot;6&quot;, 29);
+        obj.put(&quot;1&quot;, 9);
+        System.out.println(obj.get(&quot;6&quot;));
+        obj.put(&quot;10&quot;, 7);
+        System.out.println(obj.get(&quot;1&quot;));
+        System.out.println(obj.get(&quot;2&quot;));
+        System.out.println(obj.get(&quot;13&quot;));
+        obj.put(&quot;8&quot;, 30);
+        obj.put(&quot;1&quot;, 5);
+        System.out.println(obj.get(&quot;1&quot;));
+        obj.put(&quot;13&quot;, 2);
+        System.out.println(obj.get(&quot;12&quot;));
+    }
+}
+</code></pre>
+<h4 id="在tomcat6x版本中被使用的lru实现方式">在tomcat6.x版本中被使用的LRU实现方式</h4>
+<pre><code class="language-java">package LRU;
+
+import java.util.*;
+
+/**
+ * @author Orust
+ * @create 2021/5/25 10:53
+ */
+
+// 文章链接 https://www.iteye.com/blog/flychao88-1977653
+// 在tomcat6.x版本中被使用的LRU实现方式
+
+public class LRUCache_4 {
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Python3lambda表达式、自定义排序]]></title>
         <id>https://liu821218213.github.io/post/python3lambda-biao-da-shi-zi-ding-yi-pai-xu/</id>
@@ -80,20 +769,5 @@
         <link href="https://liu821218213.github.io/post/leetcode-4/">
         </link>
         <updated>2020-04-01T03:03:32.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[关于OnAndOn😊]]></title>
-        <id>https://liu821218213.github.io/post/guan-yu-onandon/</id>
-        <link href="https://liu821218213.github.io/post/guan-yu-onandon/">
-        </link>
-        <updated>2020-03-31T13:15:55.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-]]></content>
     </entry>
 </feed>
